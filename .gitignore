@@ -1,0 +1,17 @@
+# 帳密與登入狀態
+.env
+browser-profile/
+
+# 套件
+node_modules/
+
+# 工作檔案（每期資料、備份、內部筆記，只留在本機）
+*.xlsx
+*.xlsx.bak
+*.bak
+觀察紀錄.md
+
+# 系統
+Thumbs.db
+desktop.ini
+.DS_Store

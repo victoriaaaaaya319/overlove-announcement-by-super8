@@ -1,0 +1,42 @@
+{
+  "_說明": "固定不變的設定。每期會變的內容請填在 Excel，不要改這裡。",
+
+  "_orgId說明": "組織 ID 不寫在這裡。請填在 .env 的 SUPER8_ORG_ID（見 .env.example）。",
+  "consoleUrl": "https://console.no8.io",
+  "parseUrl": "https://prod-api-lq.no8.io",
+  "apiNextUrl": "https://api-next.no8.io",
+  "uploaderUrl": "https://n.no8.io/uploader/files",
+
+  "excelFile": "癡心情報上稿.xlsx",
+  "excelSheet": "上稿",
+  "profileDir": "browser-profile",
+
+  "sendTime": "21:00",
+  "nameSuffix": "-癡心情報推播",
+
+  "platforms": ["line"],
+  "audienceTags": ["【會員】真金工友", "【會員】白銀工友"],
+  "audienceTagCount": 1,
+
+  "titlePrefix": "癡心情報｜",
+  "notifyPrefix": "叮咚！癡心情報來囉！",
+  "cardImageAspectRatio": "1:1.618",
+
+  "buttons": [
+    { "type": "url", "title": "馬上閱讀電子報", "tags": ["【追蹤】閱讀癡心情報"] },
+    { "type": "postback", "title": "為什麼我會收到這則電子報？", "tags": [] }
+  ],
+
+  "quickReply": [
+    { "label": "回信給阮編，還能獲得小心點！", "text": "小心得換小心點" }
+  ],
+
+  "limits": {
+    "title": 40,
+    "subtitle": 60,
+    "altText": 100,
+    "buttonTitle": 20,
+    "quickReplyLabel": 20,
+    "quickReplyText": 20
+  }
+}
