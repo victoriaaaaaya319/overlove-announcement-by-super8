@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 方形圖片批次縮放工具
-- 正方形（或長寬差 <= 5px）的圖片：在原檔旁建立 960x960 的副本（檔名加 _960）
+- 正方形（或長寬差 <= 5px）的圖片：建立 960x960 的副本（檔名加 _960），統一存到腳本旁的「輸出」資料夾
 - 其餘圖片：跳出通知顯示尺寸比例不符合
 
 用法：
@@ -26,6 +26,7 @@ except ImportError:
 TARGET = 960          # 輸出尺寸
 TOLERANCE = 5         # 長寬差在此 px 以內視為正方形
 SUFFIX = "_960"
+OUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "輸出")   # 副本統一存放處
 EXTS = {".jpg", ".jpeg", ".png", ".webp", ".bmp", ".gif", ".tif", ".tiff"}
 
 
@@ -41,11 +42,12 @@ def pick_files():
 
 
 def output_path(src):
-    base, ext = os.path.splitext(src)
-    dst = f"{base}{SUFFIX}{ext}"
+    os.makedirs(OUT_DIR, exist_ok=True)
+    base, ext = os.path.splitext(os.path.basename(src))
+    dst = os.path.join(OUT_DIR, f"{base}{SUFFIX}{ext}")
     n = 2
     while os.path.exists(dst):          # 避免覆蓋既有副本
-        dst = f"{base}{SUFFIX}({n}){ext}"
+        dst = os.path.join(OUT_DIR, f"{base}{SUFFIX}({n}){ext}")
         n += 1
     return dst
 
