@@ -63,11 +63,12 @@ def pick_files(size):
 def output_path(src, size):
     os.makedirs(OUT_DIR, exist_ok=True)
     base, ext = os.path.splitext(os.path.basename(src))
-    suffix = f"_{size[0]}" if size[0] == size[1] else f"_{size[0]}x{size[1]}"
+    base = base.replace("_", "")        # Super 8 會擋底線，檔名內的底線全部拿掉
+    suffix = f"{size[0]}" if size[0] == size[1] else f"{size[0]}x{size[1]}"
     dst = os.path.join(OUT_DIR, f"{base}{suffix}{ext}")
     n = 2
     while os.path.exists(dst):          # 避免覆蓋既有副本
-        dst = os.path.join(OUT_DIR, f"{base}{suffix}({n}){ext}")
+        dst = os.path.join(OUT_DIR, f"{base}{suffix}-{n}{ext}")
         n += 1
     return dst
 
