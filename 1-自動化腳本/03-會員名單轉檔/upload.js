@@ -334,6 +334,7 @@ async function getSessionToken(env) {
   log('確認登入狀態…');
   const token = await getSessionToken(env);
 
+  // 先把客戶群都建好，再動標籤：上傳或比對失敗時，現有的標籤不會被清掉
   for (const p of picks) {
     log(`上傳 ${path.basename(p.file)}…`);
     const fileUrl = await uploadCsv(p.file);
@@ -342,12 +343,21 @@ async function getSessionToken(env) {
     if (!res || res.ok !== true) die(`建立「${p.title}」的回應不是成功：${JSON.stringify(res).slice(0, 300)}`);
 
     log(`等 Super 8 比對名單…`);
-    const group = await waitForGroup(token, orgId, p.title, since);
-    console.log(`✅ 客戶群「${p.title}」建立完成：${group.count.toLocaleString()} 人`);
+    p.group = await waitForGroup(token, orgId, p.title, since);
+    console.log(`✅ 客戶群「${p.title}」建立完成：${p.group.count.toLocaleString()} 人`);
+    if (!p.group.count) die(`「${p.title}」比對到 0 人，csv 可能有問題。標籤都沒有動。`);
+  }
 
+  // 標籤以最新名單為準：先清掉所有人身上的舊標籤，再加給這次名單裡的人。
+  // 到期、降級、退會的人這樣就不會留著舊標籤
+  for (const p of picks) {
     const tag = LEVEL_TAGS[p.level];
+    log(`清掉舊的 ${tag}…`);
+    const cleared = await removeTagFromTagged(token, orgId, tag, tag);
+    console.log(`✅ 已從 ${Number(cleared || 0).toLocaleString()} 人身上拿掉舊的「${tag}」`);
+
     log(`加上標籤 ${tag}…`);
-    const total = await addTagToGroup(token, orgId, group.objectId, tag);
+    const total = await addTagToGroup(token, orgId, p.group.objectId, tag);
     console.log(`✅ 已為 ${Number(total).toLocaleString()} 人加上「${tag}」`);
   }
 
