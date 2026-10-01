@@ -1,0 +1,13 @@
+{
+  "name": "member-csv-upload",
+  "version": "1.0.0",
+  "private": true,
+  "description": "把會員 uid csv 上傳到 Super 8 Studio，建立目標客戶群",
+  "scripts": {
+    "upload": "chcp 65001 >nul && node upload.js",
+    "dry": "chcp 65001 >nul && node upload.js --dry-run"
+  },
+  "dependencies": {
+    "playwright-core": "^1.47.0"
+  }
+}
