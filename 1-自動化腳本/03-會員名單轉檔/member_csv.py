@@ -14,10 +14,22 @@ sys.stdout.reconfigure(encoding="utf-8")
 
 SOURCE_DIR = Path.home() / "Downloads"
 SOURCE_PATTERN = "會員基本資料*.xlsx"
-OUTPUT_DIR = Path(r"C:\Users\USER\Documents\02-癡情工會\3-會員")
+ENV_FILE = Path(__file__).with_name(".env")
 LEVELS = {"1": "白銀", "2": "真金"}
 LEVEL_COL = 5  # F 欄「會員級別」
 UID_COL = 14  # O 欄「Line Uid」
+
+
+def read_output_dir():
+    """從 .env 讀 OUTPUT_DIR；沒設定時回傳 None。"""
+    if not ENV_FILE.exists():
+        return None
+    for line in ENV_FILE.read_text(encoding="utf-8-sig").splitlines():
+        key, sep, value = line.partition("=")
+        if sep and key.strip() == "OUTPUT_DIR":
+            value = value.strip().strip('"').strip("'")
+            return Path(value) if value else None
+    return None
 
 
 def read_members(path):
@@ -48,6 +60,11 @@ def read_members(path):
 
 
 def main():
+    output_dir = read_output_dir()
+    if output_dir is None:
+        print("還沒設定 csv 要存在哪裡：複製 .env.example 改名成 .env，填上 OUTPUT_DIR")
+        return 1
+
     files = sorted(
         (p for p in SOURCE_DIR.glob(SOURCE_PATTERN) if not p.name.startswith("~$")),
         key=lambda p: p.stat().st_mtime,
@@ -68,19 +85,20 @@ def main():
         elif name not in found:
             found[name] = (path, result)
 
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    output_dir.mkdir(parents=True, exist_ok=True)
     today = date.today().strftime("%y%m%d")
     for name in LEVELS.values():
         if name not in found:
             print(f"找不到{name}的檔案")
             continue
         path, uids = found[name]
-        out = OUTPUT_DIR / f"{name} {today}.csv"
+        out = output_dir /f"{name} {today}.csv"
         with open(out, "w", encoding="utf-8-sig", newline="") as f:
             writer = csv.writer(f)
             writer.writerow(["uid"])
             writer.writerows([uid] for uid in uids)
         print(f"{name}：{path.name} → {out.name}（{len(uids)} 筆 uid）")
+    print(f"存在 {output_dir}")
 
     return 0 if len(found) == len(LEVELS) else 1
 
