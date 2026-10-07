@@ -1,0 +1,15 @@
+{
+  "name": "super8-podcast-broadcast",
+  "version": "1.0.0",
+  "private": true,
+  "description": "讀取 Excel，把 Podcast《這聲好啊！》推播上稿到 Super 8 Studio 群發訊息（存成草稿）",
+  "scripts": {
+    "post": "chcp 65001 >nul && node post.js",
+    "dry": "chcp 65001 >nul && node post.js --dry-run",
+    "login": "chcp 65001 >nul && node post.js --login"
+  },
+  "dependencies": {
+    "playwright-core": "^1.47.0",
+    "xlsx": "^0.18.5"
+  }
+}

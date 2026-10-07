@@ -1,0 +1,48 @@
+{
+  "_說明": "固定不變的設定。每期會變的內容請填在 Excel，不要改這裡。",
+
+  "_sharedDir說明": ".env（組織 ID、帳密）和 browser-profile（登入狀態）直接共用癡心情報上稿那一包，不用再設定一次。這個資料夾裡如果自己有 .env，會優先用這裡的。",
+  "sharedDir": "../01-癡心情報上稿",
+
+  "consoleUrl": "https://console.no8.io",
+  "parseUrl": "https://prod-api-lq.no8.io",
+  "apiNextUrl": "https://api-next.no8.io",
+  "uploaderUrl": "https://n.no8.io/uploader/files",
+
+  "excelFile": "Podcast上稿.xlsx",
+  "excelSheet": "上稿",
+  "profileDir": "browser-profile",
+
+  "_sendTime說明": "Excel「發送時間」留空時用這個時間。",
+  "sendTime": "21:00",
+  "namePrefix": "-這聲好啊｜",
+
+  "platforms": ["line"],
+
+  "titlePrefix": "",
+  "notifyPrefix": "🎧【這聲好啊！】 ",
+  "cardImageAspectRatio": "1:1",
+
+  "_buttons說明": "url 按鈕的網址從 Excel 的 column 那一欄讀。tags 是點按鈕時自動上的標籤，不用就留 []。",
+  "buttons": [
+    { "type": "url", "title": "Apple Podcast 收聽連結", "column": "Apple Podcast 網址", "tags": [] },
+    { "type": "url", "title": "Spotify 收聽連結", "column": "Spotify 網址", "tags": [] },
+    { "type": "postback", "title": "🔔訂閱《這聲好啊！》", "tags": ["【訂閱】這聲好啊！"] }
+  ],
+
+  "_afterText說明": "卡片後面那則文字的固定公版。Excel「卡片後自填文字」有填的話，會用 afterSeparator 隔開接在後面。",
+  "afterText": "【想追蹤上架消息，請按訂閱！】\n\n如果未來想收到《這聲好啊！》Podcast 上架通知，記得在上方卡片按下「訂閱」按鈕！\n\n♡♡♡♡♡♡♡♡♡♡\n\n【小心得換小心點】\n\n聽完這集 Podcast 若有任何想法，也可以點選下方按鈕填寫表單，還可以領取「小心點」！",
+  "afterSeparator": "♡♡♡♡♡♡♡♡♡♡",
+
+  "_quickReply說明": "快速回覆的顯示文字每期填在 Excel；回傳內容固定用這裡的。",
+  "quickReplyText": "《這聲好啊！》小心得換小心點",
+
+  "limits": {
+    "title": 40,
+    "subtitle": 60,
+    "altText": 100,
+    "buttonTitle": 20,
+    "quickReplyLabel": 20,
+    "quickReplyText": 20
+  }
+}
