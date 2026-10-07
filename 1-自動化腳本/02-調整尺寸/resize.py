@@ -6,8 +6,9 @@
 
 用法：
   把圖片拖曳到對應的 .bat 上，或直接雙擊 .bat 開啟檔案選擇視窗
-    square_resize.bat    → 960×960（方形）
-    portrait_resize.bat  → 960×1553（直式）
+    square_resize.bat      → 960×960（方形）
+    square1040_resize.bat  → 1040×1040（方形）
+    portrait_resize.bat    → 960×1553（直式）
 
   指令列：python resize.py --size 960x1553 圖片1.jpg 圖片2.png ...
 """
